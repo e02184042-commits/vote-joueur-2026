@@ -3,306 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote Meilleur Joueur 2026 - Payant</title>
+    <title>Vote Joueur 2026</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: white; 
-            min-height: 100vh;
-            padding: 15px;
-        }
-        .container { max-width: 1100px; margin: 0 auto; }
-        h1 { text-align: center; font-size: 2rem; margin: 15px 0; }
-        .timer { 
-            background: #e63946; 
-            padding: 12px; 
-            border-radius: 10px; 
-            text-align: center; 
-            font-size: 1.1rem; 
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .prix { 
-            background: #f39c12; 
-            padding: 10px; 
-            border-radius: 8px; 
-            text-align: center; 
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .joueurs { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px; 
-        }
-        .joueur { 
-            background: rgba(255,255,255,0.1); 
-            padding: 15px; 
-            border-radius: 15px; 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #f1c40f;
-            margin: 0 auto 10px auto;
-            display: block;
-        }
-        .nom { font-size: 1.4rem; font-weight: bold; text-align: center; }
-        .club { opacity: 0.8; font-size: 0.9rem; text-align: center; margin-bottom: 10px; }
-        .votes { font-size: 1.2rem; margin: 8px 0; font-weight: bold; text-align: center; }
-        .barre { 
-            width: 100%; 
-            height: 10px; 
-            background: rgba(0,0,0,0.4); 
-            border-radius: 5px; 
-            overflow: hidden; 
-            margin: 10px 0;
-        }
-        .remplissage { 
-            height: 100%; 
-            background: linear-gradient(90deg, #f1c40f, #e67e22); 
-            width: 0%; 
-            transition: width 0.5s ease;
-        }
-        .btn-vote { 
-            background: #27ae60; 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 8px; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-        }
-        .btn-vote:hover { background: #2ecc71; transform: scale(1.02); }
-        .total { 
-            text-align: center; 
-            margin: 25px 0; 
-            font-size: 1.3rem; 
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 10px;
-        }
-        
-        /* POPUP PAIEMENT */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background: #1a1a2e;
-            margin: 10% auto;
-            padding: 25px;
-            border: 2px solid #f1c40f;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        .modal h2 { margin-bottom: 15px; color: #f1c40f; }
-        .modal input {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            border: none;
-            margin: 15px 0;
-            text-align: center;
-        }
-        .modal button {
-            padding: 12px 25px;
-            margin: 5px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-payer { background: #27ae60; color: white; }
-        .btn-annuler { background: #e74c3c; color: white; }
-        #erreur { 
-            display: none; 
-            background: #e74c3c; 
-            padding: 15px; 
-            border-radius: 10px; 
-            text-align: center; 
-            margin-bottom: 20px;
-        }
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: #fbbf24; margin-bottom: 30px; }
+        .player { background: #1e293b; border-radius: 12px; padding: 16px; margin: 16px 0; display: flex; align-items: center; gap: 16px; }
+        .player img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #fbbf24; }
+        .info { flex: 1; }
+        .info h3 { margin: 0 0 8px 0; }
+        .votes { font-size: 24px; font-weight: bold; color: #fbbf24; }
+        button { background: #fbbf24; color: #0f172a; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        button:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
+        button:hover:not(:disabled) { background: #f59e0b; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏆 MEILLEUR JOUEUR DU MONDE 2026 🏆</h1>
-        <div class="timer" id="timer">Chargement...</div>
-        <div class="prix">💰 1 VOTE = 100 FCFA | Ex: 500 votes = 50 000 FCFA</div>
-        <div id="erreur">❌ Configure Firebase d'abord dans le code !</div>
-        <div class="joueurs" id="joueurs"></div>
-        <div class="total">Total des votes : <span id="totalVotes">0</span></div>
-    </div>
-
-    <!-- POPUP QUANTITÉ DE VOTES -->
-    <div id="modalVote" class="modal">
-        <div class="modal-content">
-            <h2 id="nomJoueurModal">Voter pour</h2>
-            <p>Combien de votes veux-tu acheter ?</p>
-            <input type="number" id="quantiteVotes" min="1" max="10000" value="10" placeholder="Ex: 500">
-            <p id="prixTotal">Total : 1 000 FCFA</p>
-            <button class="btn-payer" onclick="confirmerPaiement()">💳 Payer & Voter</button>
-            <button class="btn-annuler" onclick="fermerModal()">Annuler</button>
-            <p style="font-size:0.8rem; margin-top:15px; opacity:0.7">* Ceci est une démo. Connecte un vrai système de paiement comme CinetPay/Flutterwave pour encaisser.</p>
-        </div>
+        <h1>🏆 Vote pour ton Joueur 2026</h1>
+        <div id="players"></div>
     </div>
 
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, doc, runTransaction, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
+        import { getFirestore, collection, doc, onSnapshot, updateDoc, increment, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 
-        // 1. COLLE TA CONFIG FIREBASE ICI ⬇️⬇️⬇️const firebaseConfig = {
-  apiKey: "COLLE_TON_API_KEY_ICI", // ← CHANGE ÇA
-  authDomain: "COLLE_TON_AUTH_DOMAIN_ICI", // ← CHANGE ÇA
-  // etc...
-};
+        // 🔥 ZONE 1 : COLLE TA CONFIG FIREBASE ICI 🔥
+        const firebaseConfig = {
+            apiKey: "COLLE_TON_API_KEY_ICI",
+            authDomain: "COLLE_TON_AUTH_DOMAIN_ICI",
+            projectId: "COLLE_TON_PROJECT_ID_ICI",
+            storageBucket: "COLLE_TON_STORAGE_BUCKET_ICI",
+            messagingSenderId: "COLLE_TON_MESSAGING_SENDER_ID_ICI",
+            appId: "COLLE_TON_APP_ID_ICI"
+        };
 
-        let db;
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-        } catch(e) {
-            document.getElementById('erreur').style.display = 'block';
-        }
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        const PRIX_PAR_VOTE = 100; // 100 FCFA par vote
-        let joueurActuel = null;
-
-        // 2. 20 JOUEURS AVEC PHOTOS
-        const listeJoueurs = [
-            { id: "messi", nom: "Lionel Messi", club: "Inter Miami", photo: "https://img.a.transfermarkt.technology/portrait/big/28003-1693570380.jpg" },
-            { id: "mbappe", nom: "Kylian Mbappé", club: "Real Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/342229-1682683695.jpg" },
-            { id: "haaland", nom: "Erling Haaland", club: "Man City", photo: "https://img.a.transfermarkt.technology/portrait/big/418560-1682683551.jpg" },
-            { id: "bellingham", nom: "Jude Bellingham", club: "Real Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/581678-1682683689.jpg" },
-            { id: "vinicius", nom: "Vinícius Jr", club: "Real Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/371998-1682683689.jpg" },
-            { id: "kane", nom: "Harry Kane", club: "Bayern Munich", photo: "https://img.a.transfermarkt.technology/portrait/big/132098-1682683608.jpg" },
-            { id: "salah", nom: "Mohamed Salah", club: "Liverpool", photo: "https://img.a.transfermarkt.technology/portrait/big/148455-1682683524.jpg" },
-            { id: "debruyne", nom: "Kevin De Bruyne", club: "Man City", photo: "https://img.a.transfermarkt.technology/portrait/big/88755-1682683509.jpg" },
-            { id: "rodri", nom: "Rodri", club: "Man City", photo: "https://img.a.transfermarkt.technology/portrait/big/357565-1682683648.jpg" },
-            { id: "foden", nom: "Phil Foden", club: "Man City", photo: "https://img.a.transfermarkt.technology/portrait/big/406635-1682683615.jpg" },
-            { id: "saka", nom: "Bukayo Saka", club: "Arsenal", photo: "https://img.a.transfermarkt.technology/portrait/big/433177-1682683615.jpg" },
-            { id: "odegaard", nom: "Martin Ødegaard", club: "Arsenal", photo: "https://img.a.transfermarkt.technology/portrait/big/226268-1682683631.jpg" },
-            { id: "lewandowski", nom: "Robert Lewandowski", club: "Barcelona", photo: "https://img.a.transfermarkt.technology/portrait/big/38253-1682683524.jpg" },
-            { id: "musiala", nom: "Jamal Musiala", club: "Bayern Munich", photo: "https://img.a.transfermarkt.technology/portrait/big/580195-1682683615.jpg" },
-            { id: "wirtz", nom: "Florian Wirtz", club: "Bayer Leverkusen", photo: "https://img.a.transfermarkt.technology/portrait/big/598577-1682683615.jpg" },
-            { id: "palmer", nom: "Cole Palmer", club: "Chelsea", photo: "https://img.a.transfermarkt.technology/portrait/big/568177-1682683615.jpg" },
-            { id: "alvarez", nom: "Julián Álvarez", club: "Atlético Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/576024-1682683615.jpg" },
-            { id: "valverde", nom: "Fede Valverde", club: "Real Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/369081-1682683631.jpg" },
-            { id: "griezmann", nom: "Antoine Griezmann", club: "Atlético Madrid", photo: "https://img.a.transfermarkt.technology/portrait/big/125781-1682683524.jpg" },
-            { id: "osimhen", nom: "Victor Osimhen", club: "Napoli", photo: "https://img.a.transfermarkt.technology/portrait/big/401923-1682683615.jpg" }
+        // 📸 ZONE 2 : COLLE LES LIENS DES IMAGES + NOMS DES JOUEURS ICI 📸
+        const joueurs = [
+            { id: "joueur1", nom: "Kylian Mbappé", photo: "COLLE_URL_IMAGE_1" },
+            { id: "joueur2", nom: "Erling Haaland", photo: "COLLE_URL_IMAGE_2" },
+            { id: "joueur3", nom: "Vinicius Jr", photo: "COLLE_URL_IMAGE_3" }
         ];
 
-        const dateFin = new Date();
-        dateFin.setDate(dateFin.getDate() + 20);
+        const playersDiv = document.getElementById('players');
+        const dejaVote = localStorage.getItem('aVote2026');
 
-        function updateTimer() {
-            const distance = dateFin - new Date().getTime();
-            if (distance < 0) {
-                document.getElementById('timer').innerHTML = "⛔ VOTE TERMINÉ";
-                document.querySelectorAll('.btn-vote').forEach(btn => btn.disabled = true);
-                return;
-            }
-            const j = Math.floor(distance / 86400000);
-            const h = Math.floor((distance % 86400000) / 3600000);
-            const m = Math.floor((distance % 3600000) / 60000);
-            document.getElementById('timer').innerHTML = `⏰ Fin dans : ${j}j ${h}h ${m}m`;
-        }
-        setInterval(updateTimer, 60000);
-        updateTimer();
-
-        const joueursDiv = document.getElementById('joueurs');
-        
-        if(db) {
-            onSnapshot(collection(db, "votes_joueurs_payant"), (snap) => {
-                let total = 0;
-                const votes = {};
-                snap.forEach((doc) => {
-                    votes[doc.id] = doc.data().compteur || 0;
-                    total += doc.data().compteur || 0;
-                });
-                
-                document.getElementById('totalVotes').textContent = total.toLocaleString();
-                joueursDiv.innerHTML = '';
-                
-                listeJoueurs.forEach(j => {
-                    const nb = votes[j.id] || 0;
-                    const pct = total > 0 ? (nb / total * 100).toFixed(1) : 0;
-                    const div = document.createElement('div');
-                    div.className = 'joueur';
-                    div.innerHTML = `
-                        <img src="${j.photo}" alt="${j.nom}" class="photo" onerror="this.src='https://via.placeholder.com/120x120?text=${j.nom[0]}'">
-                        <div class="nom">${j.nom}</div>
-                        <div class="club">${j.club}</div>
-                        <div class="votes">${nb.toLocaleString()} votes - ${pct}%</div>
-                        <div class="barre"><div class="remplissage" style="width: ${pct}%"></div></div>
-                        <button class="btn-vote" onclick="ouvrirModal('${j.id}', '${j.nom}')">
-                            💰 Acheter des votes
-                        </button>
-                    `;
-                    joueursDiv.appendChild(div);
-                });
+        function render(joueursData) {
+            playersDiv.innerHTML = '';
+            joueursData.forEach(j => {
+                const div = document.createElement('div');
+                div.className = 'player';
+                div.innerHTML = `
+                    <img src="${j.photo}" alt="${j.nom}" onerror="this.src='https://via.placeholder.com/80/fbbf24/0f172a?text=?'">
+                    <div class="info">
+                        <h3>${j.nom}</h3>
+                        <div class="votes">${j.votes || 0} votes</div>
+                    </div>
+                    <button onclick="voter('${j.id}')" ${dejaVote ? 'disabled' : ''}>
+                        ${dejaVote ? 'Déjà voté' : 'Voter'}
+                    </button>
+                `;
+                playersDiv.appendChild(div);
             });
         }
 
-        window.ouvrirModal = (id, nom) => {
-            joueurActuel = id;
-            document.getElementById('nomJoueurModal').textContent = `Voter pour ${nom}`;
-            document.getElementById('modalVote').style.display = 'block';
-            calculerPrix();
-        };
+        onSnapshot(collection(db, 'votes'), (snapshot) => {
+            const data = joueurs.map(j => {
+                const docSnap = snapshot.docs.find(d => d.id === j.id);
+                return { ...j, votes: docSnap ? docSnap.data().votes : 0 };
+            });
+            render(data);
+        });
 
-        window.fermerModal = () => {
-            document.getElementById('modalVote').style.display = 'none';
-        };
-
-        document.getElementById('quantiteVotes').addEventListener('input', calculerPrix);
-        
-        function calculerPrix() {
-            const qte = parseInt(document.getElementById('quantiteVotes').value) || 0;
-            const total = qte * PRIX_PAR_VOTE;
-            document.getElementById('prixTotal').textContent = `Total : ${total.toLocaleString()} FCFA`;
-        }
-
-        window.confirmerPaiement = async () => {
-            const qte = parseInt(document.getElementById('quantiteVotes').value);
-            if (!qte || qte < 1) return alert("Mets au moins 1 vote");
-            
-            // ICI TU BRANCHES TON VRAI SYSTÈME DE PAIEMENT : CinetPay, Flutterwave, Paystack
-            // Pour la démo, on ajoute direct les votes
-            alert(`Démo : Paiement de ${(qte * PRIX_PAR_VOTE).toLocaleString()} FCFA accepté !`);
-            
-            const ref = doc(db, "votes_joueurs_payant", joueurActuel);
+        window.voter = async (joueurId) => {
+            if (localStorage.getItem('aVote2026')) return;
+            const ref = doc(db, 'votes', joueurId);
             try {
-                await runTransaction(db, async (t) => {
-                    const snap = await t.get(ref);
-                    const newCount = (snap.exists() ? snap.data().compteur : 0) + qte;
-                    t.set(ref, { compteur: newCount }, { merge: true });
-                });
-                fermerModal();
-                alert(`✅ ${qte} votes ajoutés pour ${joueurActuel} !`);
-            } catch (e) {
-                alert('Erreur Firebase. Vérifie ta config.');
+                await updateDoc(ref, { votes: increment(1) });
+            } catch {
+                await setDoc(ref, { votes: 1 });
             }
+            localStorage.setItem('aVote2026', 'true');
         };
     </script>
 </body>
