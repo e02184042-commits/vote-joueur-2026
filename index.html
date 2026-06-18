@@ -171,15 +171,11 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getFirestore, collection, doc, runTransaction, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // 1. COLLE TA CONFIG FIREBASE ICI ⬇️⬇️⬇️
-        const firebaseConfig = {
-            apiKey: "COLLE_TON_API_KEY_ICI",
-            authDomain: "COLLE_TON_AUTH_DOMAIN_ICI",
-            projectId: "COLLE_TON_PROJECT_ID_ICI",
-            storageBucket: "COLLE_TON_STORAGE_BUCKET_ICI",
-            messagingSenderId: "COLLE_TON_SENDER_ID_ICI",
-            appId: "COLLE_TON_APP_ID_ICI"
-        };
+        // 1. COLLE TA CONFIG FIREBASE ICI ⬇️⬇️⬇️const firebaseConfig = {
+  apiKey: "COLLE_TON_API_KEY_ICI", // ← CHANGE ÇA
+  authDomain: "COLLE_TON_AUTH_DOMAIN_ICI", // ← CHANGE ÇA
+  // etc...
+};
 
         let db;
         try {
